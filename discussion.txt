@@ -1,0 +1,19 @@
+### C Code
+int calculate_distance_squared(struct node *a, struct node *b) {
+    int dx = a->x - b->x;
+    int dy = a->y - b->y;
+    return dx * dx + dy * dy;
+}
+
+### Assembly Code
+calculate_distance_squared:
+    ; Parameters: a in rdi, b in rsi
+    mov     eax, DWORD PTR [rdi + 4]     ; Load a->x into eax
+    sub     eax, DWORD PTR [rsi + 4]     ; dx = a->x - b->x
+    mov     edx, eax                      ; Move dx to edx
+    imul    eax, eax                      ; dx * dx
+    mov     ecx, DWORD PTR [rdi + 8]     ; Load a->y into ecx
+    sub     ecx, DWORD PTR [rsi + 8]     ; dy = a->y - b->y
+    imul    ecx, ecx                      ; dy * dy
+    add     eax, ecx                      ; dx * dx + dy * dy
+    ret
